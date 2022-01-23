@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CrudController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -23,7 +24,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-
 Route::get('/dashboard',function(){
     return 'dashboard';
+});
+Route::group(['prefix'=>'offer'],function(){
+Route::post('/store',[CrudController::class,'store'])->name('offer.store');
+Route::get('/create',[CrudController::class,'create'])->name('offer.create');
+
 });
