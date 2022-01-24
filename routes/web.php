@@ -27,8 +27,16 @@ Auth::routes();
 Route::get('/dashboard',function(){
     return 'dashboard';
 });
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
 Route::group(['prefix'=>'offer'],function(){
 Route::post('/store',[CrudController::class,'store'])->name('offer.store');
-Route::get('/create',[CrudController::class,'create'])->name('offer.create');
+
+        Route::get('/create',[CrudController::class,'create'])->name('offer.create');
+
+    });
 
 });
