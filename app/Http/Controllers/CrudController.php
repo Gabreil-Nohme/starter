@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -34,18 +35,21 @@ class CrudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OfferRequest $request)
     {
-        $roll=$this->getRoll();
-        $message=$this->getMessage();
-      $validator=Validator::make($request->all(),$roll,$message);
-      //اذا حدث خطأ في احد الحقول
-      if($validator->fails()){
-          return redirect()->back()
-          ->withErrors($validator)->withInput($request->all());
-      }
-      Offer::create($request->all());
-      return redirect()->back()->with(['success'=>'the offer is waw']);
+       /* Validation خاص لل  OfferRequest  يمكن الاستغناء عنهم بعمل ملف
+                $roll=$this->getRoll();
+                $message=$this->getMessage();
+            $validator=Validator::make($request->all(),$roll,$message);
+            //اذا حدث خطأ في احد الحقول
+            if($validator->fails()){
+                return redirect()->back()
+                ->withErrors($validator)->withInput($request->all());
+            }
+        */
+            Offer::create($request->all());
+            return redirect()->back()->with(['success'=>'the offer is waw']);
+
     }
 
     /**
@@ -92,6 +96,9 @@ class CrudController extends Controller
     {
         //
     }
+
+       /* Validation خاص لل  OfferRequest  يمكن الاستغناء عنهم بعمل ملف
+
     //validation للتنسيق تم ادراج مصفوفة سيتم استدعاؤها في الدالة
     protected function getMessage(){
         return $message=[
@@ -113,4 +120,5 @@ class CrudController extends Controller
             'details'=>'required',
         ];
     }
+*/
 }
