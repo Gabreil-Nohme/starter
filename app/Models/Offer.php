@@ -9,7 +9,7 @@ class Offer extends Model
 {
     use HasFactory;
     //المسموح للمستخدم بادخاله
-    protected $fillable=['name','price','details','created_at','updted_at'];
+    protected $fillable=['name_ar','name_en','price','details_ar','details_en','created_at','updated_at'];
     //السجلات الغير مسموح استخراجها
-   // protected $hidden=['created_at','updated_at'];
+    protected $hidden = ['created_at','updated_at'];
 }

@@ -3,7 +3,6 @@
 use App\Http\Controllers\CrudController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,10 +32,11 @@ Route::group(
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
     ], function(){
-Route::group(['prefix'=>'offer'],function(){
-Route::post('/store',[CrudController::class,'store'])->name('offer.store');
+    Route::group(['prefix'=>'offer'],function(){
 
-        Route::get('/create',[CrudController::class,'create'])->name('offer.create');
+    Route::post('/store',[CrudController::class,'store'])->name('offer.store');
+    Route::get('/create',[CrudController::class,'create'])->name('offer.create');
+    Route::get('/all',[CrudController::class,'allOffers'])->name('offer.all');
 
     });
 

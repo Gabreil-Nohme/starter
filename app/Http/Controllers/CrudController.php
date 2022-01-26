@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class CrudController extends Controller
@@ -95,6 +95,11 @@ class CrudController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function allOffers()
+    {
+        $offers=Offer::all();
+        return view('offers.all',compact('offers'));
     }
 
        /* Validation خاص لل  OfferRequest  يمكن الاستغناء عنهم بعمل ملف
