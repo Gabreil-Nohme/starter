@@ -19,6 +19,12 @@ return [
     'input name'=>'Input Offer Name',
     'input price'=>'Input Offer Price',
     'input details'=>'Input Offer Details',
-    'input your offer'=>'Input Your Offer'
+    'input your offer'=>'Input Your Offer',
+    'Actions'=>'Actions',
+    'Update'=>'Update',
+    'OfferName'=>'Offer Name',
+    'Offerdetails'=>'Offer Details',
+    'update offer'=>'Update Offer',
+
 
 ];

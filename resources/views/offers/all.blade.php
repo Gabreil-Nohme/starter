@@ -10,6 +10,7 @@
         <th scope="col">{{__('messages.OfferName')}}</th>
         <th scope="col">{{__('messages.Offerprice')}}</th>
         <th scope="col">{{__('messages.Offerdetails')}}</th>
+        <th scope="col">{{__('messages.Actions')}}</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
         <td>{{$offer->name}}</td>
         <td>{{$offer->price}}</td>
         <td>{{$offer->details}}</td>
+        <td><a href="{{route('edit_offer',['offer_id'=>$offer->id])}}" class="btn btn-success" >{{__('messages.Update')}}</a> </td>
 
       </tr>
 

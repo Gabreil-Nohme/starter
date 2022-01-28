@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OfferRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Models\Offer;
 //use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class CrudController extends Controller
 {
@@ -47,7 +49,21 @@ class CrudController extends Controller
                 ->withErrors($validator)->withInput($request->all());
             }
         */
-            Offer::create($request->all());
+        $file=$request->photo->getClientOriginalExtension();
+        $file_name=time().'.'.$file;
+        $path='images/offers';
+        $request->photo->move($path,$file_name);
+
+        Offer::create([
+            'name_ar'=>$request->name_ar,
+            'name_en'=>$request->name_en,
+            'price'=>$request->price,
+            'details_ar'=>$request->details_ar,
+            'details_en'=>$request->details_en,
+            'photo'=>$file_name,
+
+
+        ]);
             return redirect()->back()->with(['success'=>'the offer is waw']);
 
     }
@@ -69,9 +85,13 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit_offer($offer_id)
     {
-        //
+         $offer=Offer::find($offer_id);
+         if(!$offer){
+             return redirect()->route('offer.all',compact('offer_id'));
+         }
+         return view('offers.edit',compact('offer'));
     }
 
     /**
@@ -81,9 +101,22 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $offer_id)
     {
-        //
+        $offer=Offer::find($offer_id);
+        if(!$offer){
+            return redirect()->back();
+        }
+       // $offer->update($request->all());
+        return redirect()->back()->with(['success'=>'تم تحديث البيانات']);
+
+
+       /* $offer->update([
+            'name_ar'=>$request->name_ar,
+            'name_en'=>$request->name_en,
+            'price'=>$request->price,
+
+        ]);*/
     }
 
     /**
@@ -97,8 +130,11 @@ class CrudController extends Controller
         //
     }
     public function allOffers()
-    {
-        $offers=Offer::all();
+    { //اختيار حسب اللغة نسخ لصق نفس كلشي مع المسافات
+        $offers=Offer::select('id','price',
+        'name_'. LaravelLocalization::getCurrentLocale() . ' as name',
+        'details_'. LaravelLocalization::getCurrentLocale() . ' as details',
+    )->get();
         return view('offers.all',compact('offers'));
     }
 

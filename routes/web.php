@@ -3,6 +3,8 @@
 use App\Http\Controllers\CrudController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +39,8 @@ Route::group(
     Route::post('/store',[CrudController::class,'store'])->name('offer.store');
     Route::get('/create',[CrudController::class,'create'])->name('offer.create');
     Route::get('/all',[CrudController::class,'allOffers'])->name('offer.all');
+    Route::get('/edit/{offer_id}',[CrudController::class,'edit_offer'])->name('edit_offer');
+    Route::post('/update/{offer_id}',[CrudController::class,'update'])->name('offer.update_offer');
 
     });
 
