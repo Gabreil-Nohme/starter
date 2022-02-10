@@ -1,15 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="POST"  action="{{route('offer.store')}}" enctype="multipart/form-data">
+<form method="POST" id="offerForm" action="{{route('ajax-offer.store')}}" enctype="multipart/form-data">
 
   @csrf
-  <div class="container">
-      @if (Session::has('success'))
-      <div class="alert alert-warning" role="alert">
-        {{Session::get('success')}}
-      </div>
-      @endif
+  <div class="alert alert-success" id="success_msg" style="display: none;">
+    created
+  </div>
+
   <h1>{{__('messages.input your offer')}}</h1>
   <div class="form-group">
     <label for="photo" class="form-label">File photo content</label>
@@ -71,6 +69,28 @@
 </div>
 </form>
 @endsection
+@section('script')
+    <script>
+        $(document).on('click',#save_offer,function(e){
+            e.preventDefault();//save امنع اي عملية ونفذ ال
+            var formData = new FormData($('#offerForm')[0]);
+            $.ajax({
+                type:'post',
+                enctype:'multipart/form-data',
+                url:"{{route('ajax-offer.store')}}",
+                data:formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success:function(data){
+                    if (data.status == true)
+                        $('#success_msg').show();
 
+                },error:function(reject){
 
+                }
+            });
 
+        });
+    </script>
+@stop

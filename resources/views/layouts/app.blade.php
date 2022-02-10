@@ -44,6 +44,15 @@
                             <a class="nav-link" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"> {{ $properties['native'] }}</a>
                         </li>
                         @endforeach
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('offer.all') }}">All Offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('offer.create') }}">Create Offer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('video.view') }}">view</a>
+                        </li>
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -87,5 +96,6 @@
         </main>
     </div>
 
+    @yield('script')
 </body>
 </html>

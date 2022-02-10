@@ -25,7 +25,10 @@ return [
     'OfferName'=>'اسم العرض',
     'Offerdetails'=>'تفاصيل العرض',
     'update offer'=>'تعديل العرض',
-
+    'OfferImage'=> 'صورة العرض',
+    'delete'=>'حذف',
+    'erroroffer'=>'العرض غير موجود',
+    'offer deleted '=>'تم ححذف العرض',
 
 
 ];

@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\CustomAuthcontroller;
 use App\Http\Controllers\CrudController;
+use App\Http\Controllers\ListenController;
+use App\Http\Controllers\OfferController;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -20,9 +24,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify'=>true]);
+Auth::routes(['verify'=>false]);//true <----
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')/*->middleware('verified')*/;
 
 Auth::routes();
 
@@ -36,12 +40,39 @@ Route::group(
     ], function(){
     Route::group(['prefix'=>'offer'],function(){
 
-    Route::post('/store',[CrudController::class,'store'])->name('offer.store');
+    Route::middleware(['middlware'=>'auth'])->group(function () {
+
+
+    Route::match(['get','post'],'/store',[CrudController::class,'store'])->name('offer.store');
     Route::get('/create',[CrudController::class,'create'])->name('offer.create');
     Route::get('/all',[CrudController::class,'allOffers'])->name('offer.all');
     Route::get('/edit/{offer_id}',[CrudController::class,'edit_offer'])->name('edit_offer');
     Route::post('/update/{offer_id}',[CrudController::class,'update'])->name('offer.update_offer');
-
+    Route::match(['get','post'],'/delete/{offer_id}',[CrudController::class,'destroy'])->name('offer.destroy');
+    Route::get('/youtube',[ListenController::class,'get_vedio'])->name('video.view');
+    });
     });
 
 });
+
+Route::group(['prefix'=>'ajax-offer'],function(){
+    Route::get('/create',[OfferController::class,'create'])->name('ajax-offer.create');
+    Route::post('/store',[OfferController::class,'store'])->name('ajax-offer.store');
+    Route::get('/all',[OfferController::class,'all'])->name('ajax-offer.all');
+
+});
+Route::group(['namespase'=>'Auth'],function(){
+    Route::group(['middleware'=>'ChekAge'],function(){
+    Route::get('/adults',[CustomAuthcontroller::class,'adults']);
+    Route::get('/site',[CustomAuthcontroller::class,'site']);
+    });
+    Route::group(['middleware'=>'auth:admin'],function(){
+        Route::get('/admin',[CustomAuthcontroller::class,'admin']);
+
+    });
+});
+
+Route::get('/adminlogin',[CustomAuthcontroller::class,'adminlogin'])->name('adminlogin');
+Route::post('/adminloginch',[CustomAuthcontroller::class,'CheckaAminLogin'])->name('CheckaAminLogin');
+
+

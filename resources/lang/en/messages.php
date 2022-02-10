@@ -25,6 +25,9 @@ return [
     'OfferName'=>'Offer Name',
     'Offerdetails'=>'Offer Details',
     'update offer'=>'Update Offer',
-
+    'OfferImage'=> 'Offer Image',
+    'delete'=>'Delete',
+    'erroroffer'=>'this offer is not found',
+    'offer deleted '=>'offer deleted '
 
 ];

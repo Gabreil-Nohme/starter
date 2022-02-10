@@ -30,7 +30,8 @@
         <td><img src="{{asset($offer->photo)}}" /></td>
         <td><a href="{{route('edit_offer',['offer_id'=>$offer->id])}}" class="btn btn-success" >{{__('messages.Update')}}</a>
         <a href="{{route('offer.destroy',['offer_id'=>$offer->id])}}" class="btn btn-success" >{{__('messages.delete')}}</a>
-        </td>
+        <a href="{{route('ajax-offer.all',['offer_id'=>$offer->id])}}" class="btn btn-success" >{{__('messages.delete')}}/ajax</a>
+    </td>
 
       </tr>
 

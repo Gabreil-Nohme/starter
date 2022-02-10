@@ -7,15 +7,12 @@ use App\Http\Requests\UpdateRequest;
 use App\Models\Offer;
 //use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Traits\OfferTrait;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class CrudController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  use OfferTrait;
     public function index()
     {
         //
@@ -49,10 +46,8 @@ class CrudController extends Controller
                 ->withErrors($validator)->withInput($request->all());
             }
         */
-        $file=$request->photo->getClientOriginalExtension();
-        $file_name=time().'.'.$file;
-        $path='images/offers';
-        $request->photo->move($path,$file_name);
+            //import trait->saveimage
+           $file_name = $this->saveImage($request->photo,'images/offers');
 
         Offer::create([
             'name_ar'=>$request->name_ar,
@@ -125,9 +120,14 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($offer_id)
     {
-        //
+       $offer=Offer::find($offer_id);
+       if(!$offer)
+       return redirect()->back()->with(['success'=>__('messages.erroroffer')]);
+
+       $offer->delete($offer_id);
+       return redirect()->route('offer.all')->with(['success'=>'offer deleted']);
     }
     public function allOffers()
     { //اختيار حسب اللغة نسخ لصق نفس كلشي مع المسافات
