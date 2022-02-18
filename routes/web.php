@@ -4,11 +4,11 @@ use App\Http\Controllers\Auth\CustomAuthcontroller;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\ListenController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\Relation\RelationController;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,5 +74,21 @@ Route::group(['namespase'=>'Auth'],function(){
 
 Route::get('/adminlogin',[CustomAuthcontroller::class,'adminlogin'])->name('adminlogin');
 Route::post('/adminloginch',[CustomAuthcontroller::class,'CheckaAminLogin'])->name('CheckaAminLogin');
+
+######################### relations
+Route::get('/relations',[RelationController::class,'hasOne'])->name('hasOne');
+Route::get('/relationss',[RelationController::class,'hasOneP'])->name('hasOneP');
+
+Route::get('/Manyhospitals',[RelationController::class,'hospitalshasMany'])->name('hasMany');
+Route::get('/viewHospitals',[RelationController::class,'viewHospitals'])->name('viewHospitals');
+Route::get('/viewDoctors/{h_id}',[RelationController::class,'viewDoctors'])->name('viewDoctors');
+Route::get('/deleteHospital/{h_id}',[RelationController::class,'deleteHospital'])->name('deleteHospital');
+Route::get('/get-Doctor-Service',[RelationController::class,'getDoctorService'])->name('getDoctorService');
+Route::get('/get-Service-Doctor',[RelationController::class,'getServiceDoctor'])->name('getServiceDoctor');
+
+
+Route::get('/whereHasDoctors',[RelationController::class,'whereHasDoctors'])->name('whereHasDoctors');
+Route::get('/HasMaleDoctor',[RelationController::class,'HasMaleDoctor'])->name('HasMaleDoctor');
+Route::get('/NotHasDoctor',[RelationController::class,'NotHasDoctor'])->name('NotHasDoctor');
 
 

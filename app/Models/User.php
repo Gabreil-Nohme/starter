@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -48,5 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function video()
     {
         return $this->belongsToMany(Video::class);
+    }
+
+    public function phone(): HasOne
+    {
+        return $this->hasOne(Phone::class, 'user_id');
     }
 }

@@ -32,9 +32,9 @@ class IncreaseCounter
             'user_id'=>$id,
             'video_id'=>$video->id,
         ]);
-    }
-
         $video ->viewers=$video ->viewers +1;
         $video->save();
+    }
+
     }
 }
